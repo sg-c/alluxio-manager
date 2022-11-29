@@ -1,4 +1,4 @@
-package com.alluxio.alluxiomanager.ssh;
+package com.alluxio.manager.backend.ssh;
 
 import java.io.IOException;
 import java.util.ArrayList;

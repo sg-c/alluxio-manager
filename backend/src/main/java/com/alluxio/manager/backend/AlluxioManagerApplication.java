@@ -1,4 +1,4 @@
-package com.alluxio.alluxiomanager;
+package com.alluxio.manager.backend;
 
 
 import org.springframework.boot.SpringApplication;
