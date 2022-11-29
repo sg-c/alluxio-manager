@@ -1,4 +1,4 @@
-package com.alluxio.manager.backend.ssh;
+package com.alluxio.alluxiomanager.ssh;
 
 import java.io.BufferedReader;
 import java.io.IOException;

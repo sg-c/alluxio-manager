@@ -1,4 +1,4 @@
-package com.alluxio.manager.backend.ssh;
+package com.alluxio.alluxiomanager.ssh;
 
 import org.junit.jupiter.api.Test;
 
