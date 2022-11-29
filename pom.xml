@@ -2,24 +2,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<packaging>pom</packaging>
-	<modules>
-		<module>backend</module>
-	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.7.6</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.alluxio.manager</groupId>
-	<artifactId>main</artifactId>
+	<groupId>com.alluxio</groupId>
+	<artifactId>alluxio-manager</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>main</name>
-	<description>Alluxio Manager</description>
+	<name>alluxio-manager</name>
+	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>
-		<spring.boot.version>2.7.6</spring.boot.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -36,7 +31,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			<version>${spring.boot.version}</version>
+			<version>${project.parent.version}</version>
 		</dependency>
 	</dependencies>
 
@@ -45,7 +40,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>${spring.boot.version}</version>
+				<version>${project.parent.version}</version>
 			</plugin>
 		</plugins>
 	</build>
