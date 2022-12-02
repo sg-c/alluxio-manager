@@ -1,20 +1,22 @@
 import React, {Component} from 'react';
-import {Box, Container, Tab, Tabs, TextareaAutosize} from "@mui/material";
+import {Box, Tab, Tabs, TextField} from "@mui/material";
 
 class TabPanel extends Component {
     render() {
-        const {value, index, children, ...other} = this.props;
-        return (<div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`vertical-tabpanel-${index}`}
-            aria-labelledby={`vertical-tab-${index}`}
-            {...other}
-        >
-            {value === index && (<Container>
-                <TextareaAutosize>{children}</TextareaAutosize>
-            </Container>)}
-        </div>);
+        const {value, index, children, node} = this.props;
+        return (
+            <Box sx={{margin: 1, width: '100%'}}
+                 hidden={value !== index}
+                 id={`vertical-tabpanel-${index}`}>
+                {value === index &&
+                    <TextField fullWidth
+                               multiline
+                               size={"small"}
+                               label={node}
+                               value={children}/>}
+            </Box>);
+
+
     }
 }
 
@@ -34,7 +36,8 @@ class FileList extends Component {
     }
 
     createPanels(files, selected) {
-        return !files ? [] : files.map((f, i) => (<TabPanel value={selected} index={i}>{f.content}</TabPanel>));
+        return !files ? [] : files.map((f, i) => (
+            <TabPanel value={selected} index={i} node={f.node}>{f.content}</TabPanel>));
     }
 
     render() {
@@ -42,14 +45,17 @@ class FileList extends Component {
         const selected = this.state.selected;
 
         return (<Box
-            sx={{flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 224}}
+            sx={{
+                flexGrow: 1, bgcolor: 'background.paper', display: 'flex', borderColor: 'divider',
+            }}
         >
             <Tabs
                 orientation="vertical"
                 variant="scrollable"
                 value={this.state.selected}
                 onChange={this.onChanged}
-                sx={{borderRight: 1, borderColor: 'divider'}}
+                textColor="secondary"
+                indicatorColor="secondary"
             >
                 {this.createTabs(files)}
             </Tabs>
