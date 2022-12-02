@@ -1,5 +1,5 @@
 
-import FileBrowser from "./FileBrowser";
+import FileBrowser from "./file-browser/FileBrowser";
 
 function App() {
   return (
