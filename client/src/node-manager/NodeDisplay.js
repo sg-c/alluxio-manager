@@ -55,7 +55,8 @@ class NodeDisplay extends Component {
             <Box>
                 <List>
                     {nodes.map((n) =>
-                        <NodeItem node={n}
+                        <NodeItem key={n}
+                                  node={n}
                                   hostname={n.hostname}
                                   alias={n.alias}
                                   isMain={n.isMain}

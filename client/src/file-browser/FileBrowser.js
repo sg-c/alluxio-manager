@@ -1,6 +1,7 @@
 import React from "react";
-import {Container, Grid, TextField} from "@mui/material";
+import {Container, Grid} from "@mui/material";
 import FileList from "./FileList";
+import FileFetcher from "./FileFetcher";
 
 /**
  * FileBrowser does following things:
@@ -9,51 +10,29 @@ import FileList from "./FileList";
  *  - fetch and display that particular file from each node from specified location
  */
 
-const testContet = `
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. 
-Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. 
-Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. 
-Vestibulum lacinia arcu eget nulla.  
-`;
-
 export default class FileBrowser extends React.Component {
     constructor(props) {
         super(props);
-        this.nodes = props.nodes;
-        this.state = {fileLoc: ''};
-        this.onFilePathKeyDown = this.onFilePathKeyDown.bind(this);
-        this.onFilePathValueChanged = this.onFilePathValueChanged.bind(this);
+        this.state = {files: []};
+        this.onFileFetched = this.onFileFetched.bind(this);
     }
 
-    onFilePathValueChanged(e) {
-        const value = e.target.value;
-        this.setState({fileLoc: value})
-    }
-
-    onFilePathKeyDown(e) {
-        if (e.key === 'Enter') {
-            console.log(`TODO: rest.js /api/file/${this.nodes}/${this.state.fileLoc}`);
-            this.setState({files: this.getFiles()})
-        }
-    }
-
-    getFiles() {
-        return [{node: "01.all.io", content: testContet}, {node: "02.all.io", content: "def"},]
+    onFileFetched(hostname, contentOrErr) {
+        const files = this.state.files;
+        files.push({hostname: hostname, content: contentOrErr});
+        files.sort((l, r) => l.hostname.localeCompare(r.hostname));
+        this.setState(files);
     }
 
     render() {
         return (<Container>
             <Grid container spacing={1}>
                 <Grid item xs={12}>
-                    <TextField
-                        fullWidth
-                        margin="normal"
-                        id="file-path"
-                        label="File Location"
-                        variant="outlined"
-                        value={this.state.fileLoc}
-                        onKeyDown={this.onFilePathKeyDown}
-                        onChange={this.onFilePathValueChanged}></TextField>
+                    <FileFetcher onFileFetched={this.onFileFetched}
+                                 nodes={[{
+                                     hostname: 'localhost:8000'
+                                 }]}
+                    />
                 </Grid>
                 <Grid item xs={12}>
                     <FileList files={this.state.files} selected={0}/>

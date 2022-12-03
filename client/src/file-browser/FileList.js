@@ -32,12 +32,12 @@ class FileList extends Component {
     }
 
     createTabs(files) {
-        return !files ? [] : files.map((f, i) => (<Tab label={f.node} id={`file-tab-${i}`}/>));
+        return !files ? [] : files.map((f, i) => (<Tab label={f.hostname} key={i} id={`file-tab-${i}`}/>));
     }
 
     createPanels(files, selected) {
         return !files ? [] : files.map((f, i) => (
-            <TabPanel value={selected} index={i} node={f.node}>{f.content}</TabPanel>));
+            <TabPanel key={i} value={selected} index={i} node={f.hostname}>{f.content}</TabPanel>));
     }
 
     render() {

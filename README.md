@@ -17,5 +17,7 @@
 2. access the website at http://localhost:8080
 
 ## References
+
 [Including React in your Spring Boot maven build](https://medium.com/@itzgeoff/including-react-in-your-spring-boot-maven-build-ae3b8f8826e)
+
 [React.js and Spring Data REST](https://spring.io/guides/tutorials/react-and-spring-data-rest/)
