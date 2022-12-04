@@ -18,6 +18,7 @@ export default class FileBrowser extends React.Component {
     }
 
     onFileFetched(hostname, contentOrErr) {
+        console.log(JSON.stringify(contentOrErr));
         const files = this.state.files;
         files.push({hostname: hostname, content: contentOrErr});
         files.sort((l, r) => l.hostname.localeCompare(r.hostname));
@@ -30,7 +31,7 @@ export default class FileBrowser extends React.Component {
                 <Grid item xs={12}>
                     <FileFetcher onFileFetched={this.onFileFetched}
                                  nodes={[{
-                                     hostname: 'localhost:8000'
+                                     hostname: 'localhost:8080'
                                  }]}
                     />
                 </Grid>

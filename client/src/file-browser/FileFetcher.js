@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {TextField} from "@mui/material";
 import axios from "axios";
 
-const fileFetchReqPath = '/files';
+const fileFetchReqPath = '/file';
 
 class FileFetcher extends Component {
     constructor(props) {
@@ -18,7 +18,7 @@ class FileFetcher extends Component {
             const baseURL = `http://${hn}`;
             axios.create({baseURL})
                 .get(fileFetchReqPath, {params: {loc: fileLoc}})
-                .then((resp) => fileHandler(hn, resp.data))
+                .then((resp) => fileHandler(hn, resp.data.content))
                 .catch((err) => fileHandler(hn, err.message));
         }
     }
