@@ -13,13 +13,19 @@ import FileFetcher from "./FileFetcher";
 export default class FileBrowser extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {files: []};
+        this.state = {fetchedFiles: [], fetchIndex: 0};
         this.onFileFetched = this.onFileFetched.bind(this);
     }
 
-    onFileFetched(hostname, contentOrErr) {
-        console.log(JSON.stringify(contentOrErr));
-        const files = this.state.files;
+    onFileFetched(fetchIndex, hostname, contentOrErr) {
+        if (this.state.fetchIndex < fetchIndex) {
+            // a batch of files that are newly fetched is received
+            // clear the list of files to show
+            this.state.fetchedFiles = [];
+            this.state.fetchIndex = fetchIndex;
+        }
+
+        const files = this.state.fetchedFiles;
         files.push({hostname: hostname, content: contentOrErr});
         files.sort((l, r) => l.hostname.localeCompare(r.hostname));
         this.setState(files);
@@ -36,7 +42,7 @@ export default class FileBrowser extends React.Component {
                     />
                 </Grid>
                 <Grid item xs={12}>
-                    <FileList files={this.state.files} selected={0}/>
+                    <FileList files={this.state.fetchedFiles} selected={0}/>
                 </Grid>
             </Grid>
         </Container>);
