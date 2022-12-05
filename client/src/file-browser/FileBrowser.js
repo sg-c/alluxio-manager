@@ -2,6 +2,7 @@ import React from "react";
 import {Container, Grid} from "@mui/material";
 import FileList from "./FileList";
 import FileFetcher from "./FileFetcher";
+import {AppContext} from "../AppContext";
 
 /**
  * FileBrowser does following things:
@@ -17,18 +18,23 @@ export default class FileBrowser extends React.Component {
         this.onFileFetched = this.onFileFetched.bind(this);
     }
 
-    onFileFetched(fetchIndex, hostname, contentOrErr) {
+    onFileFetched(fetchIndex, node, contentOrErr) {
+        let files = this.state.fetchedFiles,
+            index = this.state.fetchIndex;
+
         if (this.state.fetchIndex < fetchIndex) {
             // a batch of files that are newly fetched is received
             // clear the list of files to show
-            this.state.fetchedFiles = [];
-            this.state.fetchIndex = fetchIndex;
+            files = [];
+            index = fetchIndex;
         }
 
-        const files = this.state.fetchedFiles;
-        files.push({hostname: hostname, content: contentOrErr});
+        const hostname = node.alias ? node.alias : node.hostname;
+
+        files.push({hostname, content: contentOrErr});
         files.sort((l, r) => l.hostname.localeCompare(r.hostname));
-        this.setState(files);
+
+        this.setState({fetchedFiles: files, fetchIndex: index});
     }
 
     render() {
@@ -36,9 +42,7 @@ export default class FileBrowser extends React.Component {
             <Grid container spacing={1}>
                 <Grid item xs={12}>
                     <FileFetcher onFileFetched={this.onFileFetched}
-                                 nodes={[{
-                                     hostname: 'localhost:8080'
-                                 }]}
+                                 nodes={this.context.nodes}
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -48,3 +52,5 @@ export default class FileBrowser extends React.Component {
         </Container>);
     }
 }
+
+FileBrowser.contextType = AppContext;

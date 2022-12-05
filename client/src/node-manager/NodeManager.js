@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import NodeInput from "./NodeInput";
 import NodeDisplay from "./NodeDisplay";
+import {Container} from "@mui/material";
+import {AppContext} from "../AppContext";
 
 
 /**
@@ -32,12 +34,18 @@ class NodeManager extends Component {
         this.state = {nodes: []};
         this.onAddNode = this.onAddNode.bind(this);
         this.onRemoveNode = this.onRemoveNode.bind(this);
+        this.onNodesChanged = this.onNodesChanged.bind(this);
+    }
+
+    onNodesChanged(nodes) {
+        this.setState({nodes});
+        this.context.onContextChanged('nodes', nodes);
     }
 
     onAddNode(node) {
         const nodes = this.state.nodes;
         nodes.push(node);
-        this.setState({nodes});
+        this.onNodesChanged(nodes);
     }
 
     onRemoveNode(node) {
@@ -46,18 +54,20 @@ class NodeManager extends Component {
         if (index > -1) {
             nodes.splice(index, 1);
         }
-        this.setState({nodes})
+        this.onNodesChanged(nodes);
     }
 
     render() {
         return (
-            <React.Fragment>
+            <Container sx={{marginTop: 1}}>
                 <NodeInput onAddNode={this.onAddNode}/>
                 <NodeDisplay nodes={this.state.nodes}
                              onRemoveNode={this.onRemoveNode}/>
-            </React.Fragment>
+            </Container>
         );
     }
 }
+
+NodeManager.contextType = AppContext;
 
 export default NodeManager;

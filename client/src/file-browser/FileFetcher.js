@@ -13,12 +13,13 @@ class FileFetcher extends Component {
         this.onFilePathValueChanged = this.onFilePathValueChanged.bind(this);
     }
 
-    fetchFiles(idx, hostnames, loc, fileHandler) {
-        for (const hn of hostnames) {
+    fetchFiles(idx, nodes, loc, fileHandler) {
+        for (const node of nodes) {
+            const hn = node.hostname;
             axios.create({baseURL: `http://${hn}`})
                 .get(fileFetchReqPath, {params: {loc}})
-                .then((resp) => fileHandler(idx, hn, resp.data))
-                .catch((err) => fileHandler(idx, hn, err.message));
+                .then((resp) => fileHandler(idx, node, resp.data))
+                .catch((err) => fileHandler(idx, node, err.message));
         }
     }
 
@@ -30,10 +31,10 @@ class FileFetcher extends Component {
     onFilePathKeyDown(e) {
         if (e.key === 'Enter') {
             const idx = ++this.fetchIndex,
-                hostnames = this.props.nodes.map((n) => n.hostname),
+                nodes = this.props.nodes,
                 fileLoc = this.state.fileLoc,
                 fileHandler = this.props.onFileFetched;
-            this.fetchFiles(idx, hostnames, fileLoc, fileHandler);
+            this.fetchFiles(idx, nodes, fileLoc, fileHandler);
         }
     }
 

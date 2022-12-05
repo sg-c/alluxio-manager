@@ -1,7 +1,7 @@
 # alluxio-manager
 
 ## Server
-``` ./mvnm spring-boot:run```
+``` ./mvnm spring-boot:run -Dspring-boot.run.arguments=--server.port=8010```
 
 ## Client
 1. install nvm
@@ -13,7 +13,7 @@
 `mvn package`
 
 ## Run
-1. run `java11; $JAVA_HOME/bin/java -jar target/alluxio-manager-0.0.1.jar`
+1. run `java11; $JAVA_HOME/bin/java -jar target/alluxio-manager-0.0.1.jar --server.port=8080`
 2. access the website at http://localhost:8080
 
 ## References
