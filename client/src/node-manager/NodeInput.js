@@ -83,14 +83,14 @@ export default class NodeInput extends Component {
 
     render() {
         return (<Grid2 container spacing={1} alignItems={'center'}>
-            <NodePropInput size={3} label={"hostname"} value={this.state.hostname}
+            <NodePropInput size={2} label={"hostname"} value={this.state.hostname}
                            onChange={this.onHostnameChanged}/>
-            <NodePropInput size={2} label={"isMain"} value={this.state.isMain}
-                           onChange={this.onIsMainChanged}/>
-            <NodePropInput size={3} label={"tags"} value={this.state.tags}
-                           onChange={this.onTagsChanged}/>
             <NodePropInput size={2} label={"alias"} value={this.state.alias}
                            onChange={this.onAliasChanged}/>
+            <NodePropInput size={2} label={"isMain"} value={this.state.isMain}
+                           onChange={this.onIsMainChanged}/>
+            <NodePropInput size={2} label={"tags"} value={this.state.tags}
+                           onChange={this.onTagsChanged}/>
             <NodePropAddButton size={2} onAddNode={this.onAddNode}/>
         </Grid2>);
     }
