@@ -52,7 +52,7 @@ jobs:
         # aws bucket name
         aws_bucket: 'alluxio.saiguang.github.build'
         # directory to upload
-        source_dir: target/alluxio-manager-0.0.1.jar
+        source_dir: /home/runner/work/alluxio-manager/alluxio-manager/target
         # destination directory for upload
         destination_dir: /alluxio-manager
     
