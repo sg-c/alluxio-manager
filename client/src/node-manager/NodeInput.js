@@ -56,13 +56,15 @@ export default class NodeInput extends Component {
     }
 
     onAddNode() {
-        this.props.onAddNode({
-            hostname: this.state.hostname,
-            isMain: this.state.isMain === 'true',
-            tags: this.state.tags.split(','),
-            alias: this.state.alias,
-        });
-        this.setState(Object.assign({}, this.DEFAULT_NODE_PROPS));
+        if (this.state.hostname) {
+            this.props.onAddNode({
+                hostname: this.state.hostname,
+                isMain: this.state.isMain === 'true',
+                tags: this.state.tags.split(','),
+                alias: this.state.alias,
+            });
+            this.setState(Object.assign({}, this.DEFAULT_NODE_PROPS));
+        }
     }
 
     onHostnameChanged(hostname) {
