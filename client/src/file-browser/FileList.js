@@ -1,19 +1,20 @@
 import React, {Component} from 'react';
-import {Box, Tab, Tabs, TextField} from "@mui/material";
+import {Box, Tab, Tabs} from "@mui/material";
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { atelierDuneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 class TabPanel extends Component {
     render() {
-        const {value, index, children, node} = this.props;
+        const {value, index, file} = this.props;
         return (
             <Box sx={{margin: 1, width: '100%'}}
                  hidden={value !== index}
                  id={`vertical-tabpanel-${index}`}>
                 {value === index &&
-                    <TextField fullWidth
-                               multiline
-                               size={"small"}
-                               label={node}
-                               value={children}/>}
+                    <SyntaxHighlighter language={file.type} style={atelierDuneDark}>
+                        {file.content}
+                    </SyntaxHighlighter>
+                }
             </Box>);
 
 
@@ -37,7 +38,7 @@ class FileList extends Component {
 
     createPanels(files, selected) {
         return !files ? [] : files.map((f, i) => (
-            <TabPanel key={i} value={selected} index={i} node={f.hostname}>{f.content}</TabPanel>));
+            <TabPanel key={i} value={selected} index={i} file={f}/>));
     }
 
     render() {

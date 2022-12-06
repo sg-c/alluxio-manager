@@ -18,7 +18,7 @@ export default class FileBrowser extends React.Component {
         this.onFileFetched = this.onFileFetched.bind(this);
     }
 
-    onFileFetched(fetchIndex, node, contentOrErr) {
+    onFileFetched(fetchIndex, loc, node, contentOrErr) {
         let files = this.state.fetchedFiles,
             index = this.state.fetchIndex;
 
@@ -30,8 +30,9 @@ export default class FileBrowser extends React.Component {
         }
 
         const hostname = node.alias ? node.alias : node.hostname;
+        const fileType = loc.substring(loc.lastIndexOf('.')+1);
 
-        files.push({hostname, content: contentOrErr});
+        files.push({hostname, content: contentOrErr, type: fileType});
         files.sort((l, r) => l.hostname.localeCompare(r.hostname));
 
         this.setState({fetchedFiles: files, fetchIndex: index});
