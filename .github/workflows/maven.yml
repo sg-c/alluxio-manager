@@ -54,5 +54,5 @@ jobs:
         # directory to upload
         source_dir: /home/runner/work/alluxio-manager/alluxio-manager/target
         # destination directory for upload
-        destination_dir: /alluxio-manager
+#         destination_dir: /alluxio-manager
     
