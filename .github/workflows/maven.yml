@@ -31,8 +31,8 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
       
-    - name: Copy target jars
-      run: mkdir staging && cp target/*.jar staging
+#     - name: Copy target jars
+#       run: mkdir staging && cp target/*.jar staging
     
 #     - name: Upload jars
 #       uses: actions/upload-artifact@v3
@@ -52,7 +52,7 @@ jobs:
         # aws bucket name
         aws_bucket: 'alluxio.saiguang.github.build'
         # directory to upload
-        source_dir: target/*.jar
+        source_dir: target
         # destination directory for upload
         destination_dir: /alluxio-manager
     
