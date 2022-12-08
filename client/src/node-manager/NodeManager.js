@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import NodeInput from "./NodeInput";
 import NodeDisplay from "./NodeDisplay";
 import {Container} from "@mui/material";
-import {AppContext} from "../AppContext";
+import {AppContext, NODE_MANAGER_STATE} from "../AppContext";
 
 
 /**
@@ -37,9 +37,14 @@ class NodeManager extends Component {
         this.onNodesChanged = this.onNodesChanged.bind(this);
     }
 
+    componentDidMount() {
+        this.setState(this.context[NODE_MANAGER_STATE]);
+    }
+
     onNodesChanged(nodes) {
-        this.setState({nodes});
-        this.context.onContextChanged('nodes', nodes);
+        const state = {nodes};
+        this.setState(state);
+        this.context.onContextChanged(NODE_MANAGER_STATE, state);
     }
 
     onAddNode(node) {

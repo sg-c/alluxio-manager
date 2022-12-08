@@ -7,10 +7,8 @@ const fileFetchReqPath = '/file';
 class FileFetcher extends Component {
     constructor(props) {
         super(props);
-        this.state = {fileLoc: ''};
-        this.fetchIndex = 0;
-        this.onFilePathKeyDown = this.onFilePathKeyDown.bind(this);
-        this.onFilePathValueChanged = this.onFilePathValueChanged.bind(this);
+        this.onFileLocInputKeyDown = this.onFileLocInputKeyDown.bind(this);
+        this.onFileLocChanged = this.onFileLocChanged.bind(this);
     }
 
     fetchFiles(idx, nodes, loc, fileHandler) {
@@ -23,17 +21,17 @@ class FileFetcher extends Component {
         }
     }
 
-    onFilePathValueChanged(e) {
-        const fileLoc = e.target.value;
-        this.setState({fileLoc});
+    onFileLocChanged(e) {
+        this.props.onFileLocChanged(e.target.value);
     }
 
-    onFilePathKeyDown(e) {
-        if (e.key === 'Enter' && this.state.fileLoc) {
-            const idx = ++this.fetchIndex,
-                nodes = this.props.nodes,
-                fileLoc = this.state.fileLoc,
-                fileHandler = this.props.onFileFetched;
+    onFileLocInputKeyDown(e) {
+        if (e.key === 'Enter' && this.props.fileLoc) {
+            const idx = this.props.fetchIndex + 1;
+            const nodes = this.props.nodes;
+            const fileLoc = this.props.fileLoc;
+            const fileHandler = this.props.onFileFetched;
+
             this.fetchFiles(idx, nodes, fileLoc, fileHandler);
         }
     }
@@ -45,9 +43,9 @@ class FileFetcher extends Component {
             id="file-path"
             label="File Location"
             variant="outlined"
-            value={this.state.fileLoc}
-            onKeyDown={this.onFilePathKeyDown}
-            onChange={this.onFilePathValueChanged}/>);
+            value={this.props.fileLoc}
+            onKeyDown={this.onFileLocInputKeyDown}
+            onChange={this.onFileLocChanged}/>);
     }
 }
 

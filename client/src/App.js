@@ -3,7 +3,7 @@ import FileBrowser from "./file-browser/FileBrowser";
 import NodeManager from "./node-manager/NodeManager";
 import {Box, Tab, Tabs} from "@mui/material";
 import React, {Component} from "react";
-import {AppContext} from "./AppContext";
+import {AppContext, FILE_BROWSER_STATE, NODE_MANAGER_STATE} from "./AppContext";
 
 class TabPanel extends Component {
     render() {
@@ -36,7 +36,7 @@ class RootTabContainer extends Component {
         const tabs = children.map((c, i) => (<Tab key={i} label={c.label}/>))
         const panels = children.map((c, i) => (<TabPanel key={i} value={selection} index={i} child={c.component}/>))
         return (<Box>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
                 <Tabs value={selection} onChange={this.onChange}>
                     {tabs}
                 </Tabs>
@@ -46,15 +46,26 @@ class RootTabContainer extends Component {
     }
 }
 
+/**
+ * The context of the app contains states of subcomponents.
+ * In addition, it contains a callback which for subcomponent to update its
+ * states in the context.
+ */
 class AppWithContext extends Component {
     constructor(props) {
         super(props);
-        this.state = {nodes: []};
+        this.state = {
+            [FILE_BROWSER_STATE]: {},
+            [NODE_MANAGER_STATE]: {},
+        };
         this.onContextChanged = this.onContextChanged.bind(this);
     }
 
     onContextChanged(k, v) {
-        this.setState({[k]: v});
+        // because component states are NOT direct elements of "this.state",
+        // we need to destruct the v and merge it before calling setState()
+        const state = {...this.state[k], ...v};
+        this.setState({[k]: state});
     }
 
     render() {
